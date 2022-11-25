@@ -5,14 +5,17 @@ from PyQt5 import uic, QtWidgets, QtCore
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem
 
+import addEditCoffeeForm
+import mainForm
 
-class MyWidget(QMainWindow):
+
+class MyWidget(QMainWindow, mainForm.Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main.ui', self)
-        # self.setupUi(self)
+        # uic.loadUi('mainForm.ui', self)
+        self.setupUi(self)
 
-        self.connection = sqlite3.connect("coffee.sqlite")
+        self.connection = sqlite3.connect("data/coffee.sqlite")
         self.frying = {
             idx: el for idx, el in self.connection.cursor().execute("SELECT * FROM frying").fetchall()
         }
@@ -66,11 +69,11 @@ class MyWidget(QMainWindow):
         self.connection.close()
 
 
-class addEditCoffeeWidget(QMainWindow):
+class addEditCoffeeWidget(QMainWindow, addEditCoffeeForm.Ui_MainWindow):
     def __init__(self, parent):
         super().__init__(parent)
-        uic.loadUi('addEditCoffeeForm.ui', self)
-        # self.setupUi(self)
+        # uic.loadUi('addEditCoffeeForm.ui', self)
+        self.setupUi(self)
 
         self.radioButton.toggled.connect(self.radio_changed)
         self.spinBox_3.valueChanged.connect(self.id_changed)
